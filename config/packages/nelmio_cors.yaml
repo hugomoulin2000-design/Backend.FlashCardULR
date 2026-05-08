@@ -1,0 +1,20 @@
+nelmio_cors:
+    defaults:
+        allow_origin: ['http://localhost:5173', 'https://localhost:5173']
+        allow_credentials: true
+        allow_headers: ['Content-Type', 'Authorization']
+        expose_headers: ['Link', 'Authorization']
+        allow_methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
+        max_age: 3600
+
+    paths:
+        '^/api/':
+            allow_origin:
+                - 'http://localhost:5173'
+                - 'https://localhost:5173'
+                - 'https://projetl2.localhost:8443'
+            allow_credentials: true
+            allow_headers: ['Content-Type', 'Authorization']
+            expose_headers: ['Link', 'Authorization']
+            allow_methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
+            max_age: 3600

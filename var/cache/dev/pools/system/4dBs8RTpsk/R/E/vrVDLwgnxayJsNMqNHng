@@ -1,0 +1,49 @@
+<?php //easyadmin.routes.fqcn_to_route
+
+return [PHP_INT_MAX, [
+    'App\\Controller\\Admin\\DashboardController' => [
+        '' => [
+            '' => 'admin',
+        ],
+        'App\\Controller\\Admin\\DeckCrudController' => [
+            'index' => 'admin_deck_index',
+            'new' => 'admin_deck_new',
+            'batchDelete' => 'admin_deck_batch_delete',
+            'autocomplete' => 'admin_deck_autocomplete',
+            'renderFilters' => 'admin_deck_render_filters',
+            'edit' => 'admin_deck_edit',
+            'delete' => 'admin_deck_delete',
+            'detail' => 'admin_deck_detail',
+        ],
+        'App\\Controller\\Admin\\FlashcardCrudController' => [
+            'index' => 'admin_flashcard_index',
+            'new' => 'admin_flashcard_new',
+            'batchDelete' => 'admin_flashcard_batch_delete',
+            'autocomplete' => 'admin_flashcard_autocomplete',
+            'renderFilters' => 'admin_flashcard_render_filters',
+            'edit' => 'admin_flashcard_edit',
+            'delete' => 'admin_flashcard_delete',
+            'detail' => 'admin_flashcard_detail',
+        ],
+        'App\\Controller\\Admin\\TagCrudController' => [
+            'index' => 'admin_tag_index',
+            'new' => 'admin_tag_new',
+            'batchDelete' => 'admin_tag_batch_delete',
+            'autocomplete' => 'admin_tag_autocomplete',
+            'renderFilters' => 'admin_tag_render_filters',
+            'edit' => 'admin_tag_edit',
+            'delete' => 'admin_tag_delete',
+            'detail' => 'admin_tag_detail',
+        ],
+        'App\\Controller\\Admin\\UserCrudController' => [
+            'index' => 'admin_user_index',
+            'new' => 'admin_user_new',
+            'batchDelete' => 'admin_user_batch_delete',
+            'autocomplete' => 'admin_user_autocomplete',
+            'renderFilters' => 'admin_user_render_filters',
+            'edit' => 'admin_user_edit',
+            'delete' => 'admin_user_delete',
+            'detail' => 'admin_user_detail',
+        ],
+    ],
+]];

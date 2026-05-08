@@ -1,0 +1,37 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content %}
+    <h1 class="mb-4">Bienvenue dans l'administration</h1>
+
+    <div class="row">
+
+        <div class="col-md-3">
+            <a class="btn btn-primary w-100 mb-3"
+               href="{{ ea_url().setController('App\\Controller\\Admin\\DeckCrudController') }}">
+                Gérer les Decks
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a class="btn btn-primary w-100 mb-3"
+               href="{{ ea_url().setController('App\\Controller\\Admin\\FlashcardCrudController') }}">
+                Gérer les Flashcards
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a class="btn btn-primary w-100 mb-3"
+               href="{{ ea_url().setController('App\\Controller\\Admin\\TagCrudController') }}">
+                Gérer les Tags
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a class="btn btn-primary w-100 mb-3"
+               href="{{ ea_url().setController('App\\Controller\\Admin\\UserCrudController') }}">
+                Gérer les Utilisateurs
+            </a>
+        </div>
+
+    </div>
+{% endblock %}
