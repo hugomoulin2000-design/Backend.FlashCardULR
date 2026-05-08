@@ -17,7 +17,7 @@ COPY . .
 # 🔥 Variables nécessaires AU BUILD (sinon cache:clear plante)
 ENV APP_ENV=prod
 ENV DEFAULT_URI="https://example.com"
-ENV DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db"
+ARG DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db"
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
