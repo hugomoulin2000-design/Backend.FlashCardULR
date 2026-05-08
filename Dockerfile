@@ -14,11 +14,11 @@ COPY . .
 ENV APP_ENV=prod
 ENV APP_DEBUG=0
 
-# Fake DB pour éviter les erreurs pendant cache:clear
-ENV SYMFONY_BUILD_DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db"
+# Fake DB pour le build (NE PAS utiliser DATABASE_URL ici)
+ENV SYMFONY_BUILD_DB="sqlite:///%kernel.project_dir%/var/data.db"
 
-# Composer install en prod
-RUN DATABASE_URL=$SYMFONY_BUILD_DATABASE_URL composer install --no-dev --optimize-autoloader --no-interaction
+# Composer install en utilisant la FAKE DB
+RUN DATABASE_URL=$SYMFONY_BUILD_DB composer install --no-dev --optimize-autoloader --no-interaction
 
 EXPOSE 10000
 
