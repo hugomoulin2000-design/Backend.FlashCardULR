@@ -1,29 +1,25 @@
 FROM php:8.2-fpm
 
-# Install system deps
 RUN apt-get update && apt-get install -y \
     git unzip libpq-dev libzip-dev \
     && docker-php-ext-install pdo pdo_pgsql zip
 
-# Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Set working directory
 WORKDIR /app
 
-# Copy project files
 COPY . .
 
-# 🔥 Variables nécessaires AU BUILD (sinon cache:clear plante)
+# Empêche Symfony de charger .env pendant le build
 ENV APP_ENV=prod
-ENV DEFAULT_URI="https://example.com"
-ARG DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db"
+ENV APP_DEBUG=0
 
-# Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader
+# Fake DB pour éviter les erreurs pendant cache:clear
+ENV SYMFONY_BUILD_DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db"
 
-# Expose port for Render
+# Composer install en prod
+RUN DATABASE_URL=$SYMFONY_BUILD_DATABASE_URL composer install --no-dev --optimize-autoloader --no-interaction
+
 EXPOSE 10000
 
-# Start Symfony with built-in server
 CMD ["php", "-S", "0.0.0.0:10000", "-t", "public"]
