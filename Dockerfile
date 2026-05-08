@@ -20,9 +20,11 @@ ENV SYMFONY_BUILD_DB="sqlite:///%kernel.project_dir%/var/data.db"
 # Composer install en utilisant la FAKE DB
 RUN DATABASE_URL=$SYMFONY_BUILD_DB composer install --no-dev --optimize-autoloader --no-interaction
 
+RUN rm -rf var/cache/prod
+
+
 EXPOSE 10000
 
-RUN rm -rf var/cache/prod
 
 
 CMD ["php", "-S", "0.0.0.0:10000", "-t", "public"]
