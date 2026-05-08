@@ -22,4 +22,7 @@ RUN DATABASE_URL=$SYMFONY_BUILD_DB composer install --no-dev --optimize-autoload
 
 EXPOSE 10000
 
+RUN rm -rf var/cache/prod
+
+
 CMD ["php", "-S", "0.0.0.0:10000", "-t", "public"]
