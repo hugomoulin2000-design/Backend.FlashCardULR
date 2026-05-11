@@ -17,10 +17,37 @@ class MigrateController extends AbstractController
         return new Response(nl2br($output));
     }
 
-    #[Route('/debug-db')]
-    public function debugDb(): Response
-    {
-        return new Response($_ENV['DATABASE_URL']);
-    }
+   #[Route('/debug-db-info')]
+public function debugDbInfo(): Response
+{
+    $conn = $this->getDoctrine()->getConnection();
+
+    $info = [
+        'driver' => $conn->getDriver()->getName(),
+        'database' => $conn->getDatabase(),
+        'host' => $conn->getParams()['host'] ?? null,
+        'port' => $conn->getParams()['port'] ?? null,
+        'user' => $conn->getParams()['user'] ?? null,
+        'schema' => $conn->getParams()['schema'] ?? null,
+        'url' => $conn->getParams()['url'] ?? null,
+    ];
+
+    return new Response('<pre>' . print_r($info, true) . '</pre>');
+}
+
+    #[Route('/debug-user-query')]
+public function debugUserQuery(): Response
+{
+    $conn = $this->getDoctrine()->getConnection();
+
+    $sql = "SELECT column_name, data_type 
+            FROM information_schema.columns 
+            WHERE table_name = 'user'";
+
+    $columns = $conn->fetchAllAssociative($sql);
+
+    return new Response('<pre>' . print_r($columns, true) . '</pre>');
+}
+
 
 }
