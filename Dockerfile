@@ -12,8 +12,11 @@ COPY . .
 # Fake env vars for build
 ENV APP_ENV=prod
 ENV APP_DEBUG=0
-ENV DATABASE_URL=postgres://fake:fake@localhost:5432/fake
 ENV DATABASE_VERSION=15
+
+ARG DATABASE_URL
+ENV DATABASE_URL=${DATABASE_URL}
+
 
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
