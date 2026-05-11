@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Doctrine\DBAL\Connection; // ← LA LIGNE QUI MANQUAIT
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,17 +12,14 @@ class MigrateController extends AbstractController
     #[Route('/migrate', name: 'app_migrate')]
     public function migrate(): Response
     {
-        // Exécuter la migration depuis le bon chemin
         $output = shell_exec('php /app/bin/console doctrine:migrations:migrate --no-interaction 2>&1');
-
         return new Response(nl2br($output));
     }
 
-   #[Route('/debug-db-info')]
+    #[Route('/debug-db-info')]
     public function debugDbInfo(Connection $conn): Response
     {
         $params = $conn->getParams();
-
         return new Response('<pre>' . print_r($params, true) . '</pre>');
     }
 
@@ -36,10 +34,6 @@ class MigrateController extends AbstractController
         ";
 
         $columns = $conn->fetchAllAssociative($sql);
-
         return new Response('<pre>' . print_r($columns, true) . '</pre>');
     }
-
-
-
 }
