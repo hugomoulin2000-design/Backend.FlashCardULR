@@ -23,8 +23,9 @@ ENV DATABASE_VERSION=15
 # Install PHP dependencies SANS scripts Symfony
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
 
-# 🔥 Clear prod cache APRÈS build, quand tout est en place
-RUN php bin/console cache:clear --env=prod --no-warmup
+# ❌ NE PAS faire cache:clear ici
+# Render injecte DATABASE_URL APRÈS le build
+# Symfony reconstruira le cache automatiquement au runtime
 
 EXPOSE 10000
 CMD ["php", "-S", "0.0.0.0:10000", "-t", "public"]
