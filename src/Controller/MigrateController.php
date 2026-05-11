@@ -18,36 +18,38 @@ class MigrateController extends AbstractController
     }
 
    #[Route('/debug-db-info')]
-public function debugDbInfo(): Response
+public function debugDbInfo(\Doctrine\DBAL\Connection $conn): Response
 {
-    $conn = $this->getDoctrine()->getConnection();
+    $params = $conn->getParams();
 
     $info = [
         'driver' => $conn->getDriver()->getName(),
-        'database' => $conn->getDatabase(),
-        'host' => $conn->getParams()['host'] ?? null,
-        'port' => $conn->getParams()['port'] ?? null,
-        'user' => $conn->getParams()['user'] ?? null,
-        'schema' => $conn->getParams()['schema'] ?? null,
-        'url' => $conn->getParams()['url'] ?? null,
+        'dbname' => $params['dbname'] ?? null,
+        'host' => $params['host'] ?? null,
+        'port' => $params['port'] ?? null,
+        'user' => $params['user'] ?? null,
+        'schema' => $params['schema'] ?? null,
+        'url' => $params['url'] ?? null,
     ];
 
     return new Response('<pre>' . print_r($info, true) . '</pre>');
 }
 
-    #[Route('/debug-user-query')]
-public function debugUserQuery(): Response
+   #[Route('/debug-user-query')]
+public function debugUserQuery(\Doctrine\DBAL\Connection $conn): Response
 {
-    $conn = $this->getDoctrine()->getConnection();
-
-    $sql = "SELECT column_name, data_type 
-            FROM information_schema.columns 
-            WHERE table_name = 'user'";
+    $sql = "
+        SELECT column_name, data_type 
+        FROM information_schema.columns 
+        WHERE table_schema = 'public'
+        AND table_name = 'user'
+    ";
 
     $columns = $conn->fetchAllAssociative($sql);
 
     return new Response('<pre>' . print_r($columns, true) . '</pre>');
 }
+
 
 
 }
