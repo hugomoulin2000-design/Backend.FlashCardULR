@@ -8,6 +8,9 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
 COPY . .
+ENV APP_ENV=prod
+ENV APP_DEBUG=0
+ENV DATABASE_URL=postgres://fake:fake@localhost:5432/fake
 
 RUN composer install --no-dev --optimize-autoloader
 
