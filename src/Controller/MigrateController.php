@@ -16,4 +16,11 @@ class MigrateController extends AbstractController
 
         return new Response(nl2br($output));
     }
+
+    #[Route('/debug-db')]
+    public function debugDb(): Response
+    {
+        return new Response($_ENV['DATABASE_URL']);
+    }
+
 }
