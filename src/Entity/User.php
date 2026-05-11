@@ -12,6 +12,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\Table(name: "user", schema: "public")]
 class User implements UserInterface, \Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
