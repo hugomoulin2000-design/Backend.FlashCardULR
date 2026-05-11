@@ -30,6 +30,7 @@ return [
         '/admin/user/autocomplete' => [[['_route' => 'admin_user_autocomplete', '_controller' => 'App\\Controller\\Admin\\UserCrudController::autocomplete', 'routeCreatedByEasyAdmin' => true, 'dashboardControllerFqcn' => 'App\\Controller\\Admin\\DashboardController', 'crudControllerFqcn' => 'App\\Controller\\Admin\\UserCrudController', 'crudAction' => 'autocomplete'], null, ['GET' => 0], null, false, false, null]],
         '/admin/user/render-filters' => [[['_route' => 'admin_user_render_filters', '_controller' => 'App\\Controller\\Admin\\UserCrudController::renderFilters', 'routeCreatedByEasyAdmin' => true, 'dashboardControllerFqcn' => 'App\\Controller\\Admin\\DashboardController', 'crudControllerFqcn' => 'App\\Controller\\Admin\\UserCrudController', 'crudAction' => 'renderFilters'], null, ['GET' => 0], null, false, false, null]],
         '/logout' => [[['_route' => '_logout_main'], null, null, null, false, false, null]],
+        '/api/classement' => [[['_route' => 'app_api_classementapi_rankingall', '_controller' => 'App\\Controller\\Api\\ClassementApiController::rankingAll'], null, ['GET' => 0], null, false, false, null]],
         '/api/decks' => [
             [['_route' => 'api_decks', '_controller' => 'App\\Controller\\Api\\DeckApiController::index'], null, ['GET' => 0], null, false, false, null],
             [['_route' => 'api_deck_create', '_controller' => 'App\\Controller\\Api\\DeckApiController::createDeck'], null, ['POST' => 0], null, false, false, null],

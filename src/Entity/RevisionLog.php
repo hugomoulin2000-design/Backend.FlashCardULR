@@ -18,6 +18,7 @@ class RevisionLog
     private ?User $user = null;
 
     #[ORM\ManyToOne]
+    #[ORM\JoinColumn(onDelete: "CASCADE")]
     private ?Deck $deck = null;
 
     #[ORM\Column]

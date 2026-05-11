@@ -38,6 +38,7 @@ class Deck
     private Collection $flashcards;
 
     #[ORM\ManyToOne(inversedBy: 'decks')]
+    #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
     private ?User $user = null;
 
 

@@ -806,7 +806,7 @@ class FrameworkConfig implements \Symfony\Component\Config\Builder\ConfigBuilder
      * @template TValue of array|bool
      * @param TValue $value
      * Serializer configuration
-     * @default {"enabled":false,"enable_attributes":true,"mapping":{"paths":[]},"default_context":[],"named_serializers":[]}
+     * @default {"enabled":true,"enable_attributes":true,"mapping":{"paths":[]},"default_context":[],"named_serializers":[]}
      * @return \Symfony\Config\Framework\SerializerConfig|$this
      * @psalm-return (TValue is array ? \Symfony\Config\Framework\SerializerConfig : static)
      * @deprecated since Symfony 7.4

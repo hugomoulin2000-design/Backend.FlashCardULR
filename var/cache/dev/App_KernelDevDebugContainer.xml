@@ -316,13 +316,31 @@
           <parameter key="service">Vich\UploaderBundle\Naming\SmartUniqueNamer.deck_images</parameter>
           <parameter key="options" type="collection"/>
         </parameter>
+        <parameter key="delete_on_update">true</parameter>
+        <parameter key="delete_on_remove">true</parameter>
         <parameter key="directory_namer" type="collection">
           <parameter key="service">null</parameter>
           <parameter key="options">null</parameter>
         </parameter>
-        <parameter key="delete_on_remove">true</parameter>
         <parameter key="erase_fields">true</parameter>
+        <parameter key="inject_on_load">false</parameter>
+        <parameter key="namer_keep_extension">false</parameter>
+        <parameter key="db_driver">orm</parameter>
+      </parameter>
+      <parameter key="user_images" type="collection">
+        <parameter key="uri_prefix">/uploads/users</parameter>
+        <parameter key="upload_destination">/var/www/projets/projetl2/public/uploads/users</parameter>
+        <parameter key="namer" type="collection">
+          <parameter key="service">Vich\UploaderBundle\Naming\SmartUniqueNamer.user_images</parameter>
+          <parameter key="options" type="collection"/>
+        </parameter>
         <parameter key="delete_on_update">true</parameter>
+        <parameter key="delete_on_remove">true</parameter>
+        <parameter key="directory_namer" type="collection">
+          <parameter key="service">null</parameter>
+          <parameter key="options">null</parameter>
+        </parameter>
+        <parameter key="erase_fields">true</parameter>
         <parameter key="inject_on_load">false</parameter>
         <parameter key="namer_keep_extension">false</parameter>
         <parameter key="db_driver">orm</parameter>
@@ -440,6 +458,14 @@
       <tag name="container.service_subscriber"/>
       <call method="setContainer">
         <argument type="service" id=".service_locator.WOU_dzL.App\Controller\Admin\UserCrudController"/>
+      </call>
+    </service>
+    <service id="App\Controller\Api\ClassementApiController" class="App\Controller\Api\ClassementApiController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="routing.controller"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.TJNRSaV.App\Controller\Api\ClassementApiController"/>
       </call>
     </service>
     <service id="App\Controller\Api\DeckApiController" class="App\Controller\Api\DeckApiController" public="true" autowire="true" autoconfigure="true">
@@ -593,7 +619,7 @@
     </service>
     <service id="argument_resolver.service" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
       <tag name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" priority="-50">controller.argument_value_resolver</tag>
-      <argument type="service" id=".service_locator.diNMdAY"/>
+      <argument type="service" id=".service_locator._TUPyaq"/>
     </service>
     <service id="argument_resolver.default" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">
       <tag name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" priority="-100">controller.argument_value_resolver</tag>
@@ -2998,7 +3024,7 @@
     </service>
     <service id="argument_resolver.not_tagged_controller" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
       <tag name="controller.argument_value_resolver" priority="-200"/>
-      <argument type="service" id=".service_locator.diNMdAY"/>
+      <argument type="service" id=".service_locator._TUPyaq"/>
     </service>
     <service id="routing.resolver" class="Symfony\Component\Config\Loader\LoaderResolver">
       <call method="addLoader">
@@ -3075,6 +3101,7 @@
     <service id="routing.loader.attribute.services" class="Symfony\Component\Routing\Loader\AttributeServicesLoader">
       <tag name="routing.loader" priority="-10"/>
       <argument type="collection">
+        <argument>App\Controller\Api\ClassementApiController</argument>
         <argument>App\Controller\Api\DeckApiController</argument>
         <argument>App\Controller\Api\FlashcardApiController</argument>
         <argument>App\Controller\Api\RevisionLogController</argument>
@@ -5810,13 +5837,19 @@
       </call>
     </service>
     <service id="doctrine.dbal.default_connection.event_manager" class="Symfony\Bridge\Doctrine\ContainerAwareEventManager">
-      <argument type="service" id=".service_locator.Y8LF_zi"/>
+      <argument type="service" id=".service_locator..xMWxtC"/>
       <argument type="collection">
         <argument type="collection">
           <argument type="collection">
             <argument>preUpdate</argument>
           </argument>
           <argument>vich_uploader.listener.clean.deck_images</argument>
+        </argument>
+        <argument type="collection">
+          <argument type="collection">
+            <argument>preUpdate</argument>
+          </argument>
+          <argument>vich_uploader.listener.clean.user_images</argument>
         </argument>
         <argument type="collection">
           <argument type="collection">
@@ -5871,6 +5904,30 @@
             <argument>preUpdate</argument>
           </argument>
           <argument>vich_uploader.listener.upload.deck_images</argument>
+        </argument>
+        <argument type="collection">
+          <argument type="collection">
+            <argument>preRemove</argument>
+          </argument>
+          <argument>vich_uploader.listener.remove.user_images</argument>
+        </argument>
+        <argument type="collection">
+          <argument type="collection">
+            <argument>postFlush</argument>
+          </argument>
+          <argument>vich_uploader.listener.remove.user_images</argument>
+        </argument>
+        <argument type="collection">
+          <argument type="collection">
+            <argument>prePersist</argument>
+          </argument>
+          <argument>vich_uploader.listener.upload.user_images</argument>
+        </argument>
+        <argument type="collection">
+          <argument type="collection">
+            <argument>preUpdate</argument>
+          </argument>
+          <argument>vich_uploader.listener.upload.user_images</argument>
         </argument>
       </argument>
     </service>
@@ -7071,6 +7128,9 @@
     <service id="Vich\UploaderBundle\Naming\SmartUniqueNamer.deck_images" class="Vich\UploaderBundle\Naming\SmartUniqueNamer" autowire="true">
       <argument type="service" id="Vich\UploaderBundle\Util\Transliterator"/>
     </service>
+    <service id="Vich\UploaderBundle\Naming\SmartUniqueNamer.user_images" class="Vich\UploaderBundle\Naming\SmartUniqueNamer" autowire="true">
+      <argument type="service" id="Vich\UploaderBundle\Util\Transliterator"/>
+    </service>
     <service id="vich_uploader.adapter.mongodb" class="Vich\UploaderBundle\Adapter\ODM\MongoDB\MongoDBAdapter"/>
     <service id="vich_uploader.adapter.orm" class="Vich\UploaderBundle\Adapter\ORM\DoctrineORMAdapter"/>
     <service id="vich_uploader.adapter.phpcr" class="Vich\UploaderBundle\Adapter\PHPCR\PHPCRAdapter"/>
@@ -7362,6 +7422,29 @@
       <argument type="service" id="vich_uploader.metadata_reader"/>
       <argument type="service" id="vich_uploader.upload_handler"/>
     </service>
+    <service id="vich_uploader.listener.clean.user_images" class="Vich\UploaderBundle\EventListener\Doctrine\CleanListener">
+      <tag name="doctrine.event_listener" event="preUpdate" priority="50"/>
+      <argument>user_images</argument>
+      <argument type="service" id="vich_uploader.adapter.orm"/>
+      <argument type="service" id="vich_uploader.metadata_reader"/>
+      <argument type="service" id="vich_uploader.upload_handler"/>
+    </service>
+    <service id="vich_uploader.listener.remove.user_images" class="Vich\UploaderBundle\EventListener\Doctrine\RemoveListener">
+      <tag name="doctrine.event_listener" event="preRemove" priority="0"/>
+      <tag name="doctrine.event_listener" event="postFlush" priority="0"/>
+      <argument>user_images</argument>
+      <argument type="service" id="vich_uploader.adapter.orm"/>
+      <argument type="service" id="vich_uploader.metadata_reader"/>
+      <argument type="service" id="vich_uploader.upload_handler"/>
+    </service>
+    <service id="vich_uploader.listener.upload.user_images" class="Vich\UploaderBundle\EventListener\Doctrine\UploadListener">
+      <tag name="doctrine.event_listener" event="prePersist" priority="0"/>
+      <tag name="doctrine.event_listener" event="preUpdate" priority="0"/>
+      <argument>user_images</argument>
+      <argument type="service" id="vich_uploader.adapter.orm"/>
+      <argument type="service" id="vich_uploader.metadata_reader"/>
+      <argument type="service" id="vich_uploader.upload_handler"/>
+    </service>
     <service id="nelmio_cors.cors_listener" class="Nelmio\CorsBundle\EventListener\CorsListener">
       <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="250"/>
       <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse" priority="0"/>
@@ -7540,6 +7623,10 @@
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\Admin\UserCrudController" class="App\Controller\Admin\UserCrudController" autowire="true" abstract="true"/>
     <service id=".instanceof.EasyCorp\Bundle\EasyAdminBundle\Contracts\Controller\CrudControllerInterface.0.App\Controller\Admin\UserCrudController" class="App\Controller\Admin\UserCrudController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\Admin\UserCrudController" class="App\Controller\Admin\UserCrudController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\Api\ClassementApiController" class="App\Controller\Api\ClassementApiController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\Api\ClassementApiController" class="App\Controller\Api\ClassementApiController" autowire="true" abstract="true"/>
+    <service id=".instanceof.App\Controller\Api\ClassementApiController.0.App\Controller\Api\ClassementApiController" class="App\Controller\Api\ClassementApiController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\Api\ClassementApiController" class="App\Controller\Api\ClassementApiController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\Api\DeckApiController" class="App\Controller\Api\DeckApiController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\Api\DeckApiController" class="App\Controller\Api\DeckApiController" autowire="true" abstract="true"/>
     <service id=".instanceof.App\Controller\Api\DeckApiController.0.App\Controller\Api\DeckApiController" class="App\Controller\Api\DeckApiController" autowire="true" abstract="true"/>
@@ -8964,6 +9051,18 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.8yyrqQl" method="withContext"/>
     </service>
+    <service id=".service_locator.z0A7H.F" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="em" type="service_closure" id="doctrine.orm.default_entity_manager"/>
+      </argument>
+    </service>
+    <service id=".service_locator.z0A7H.F.App\Controller\Api\ClassementApiController::rankingAll()" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\Api\ClassementApiController::rankingAll()"/>
+      <argument>App\Controller\Api\ClassementApiController::rankingAll()</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.z0A7H.F" method="withContext"/>
+    </service>
     <service id=".service_locator.LSa5ZfP" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -9096,12 +9195,6 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.MHMFXwg" method="withContext"/>
     </service>
-    <service id=".service_locator.z0A7H.F" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="em" type="service_closure" id="doctrine.orm.default_entity_manager"/>
-      </argument>
-    </service>
     <service id=".service_locator.z0A7H.F.App\Controller\Api\RevisionLogController::logRevision()" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\Api\RevisionLogController::logRevision()"/>
       <argument>App\Controller\Api\RevisionLogController::logRevision()</argument>
@@ -9206,7 +9299,7 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.j3kKXma" method="withContext"/>
     </service>
-    <service id=".service_locator.diNMdAY" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator._TUPyaq" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.1vYpZ1B.kernel::registerContainerConfiguration()"/>
@@ -9298,6 +9391,7 @@
         <argument key="App\Controller\Admin\UserCrudController::createNewForm" type="service_closure" id=".service_locator.5pLxdxQ.App\Controller\Admin\UserCrudController::createNewForm()"/>
         <argument key="App\Controller\Admin\UserCrudController::createNewFormBuilder" type="service_closure" id=".service_locator.5pLxdxQ.App\Controller\Admin\UserCrudController::createNewFormBuilder()"/>
         <argument key="App\Controller\Admin\UserCrudController::configureResponseParameters" type="service_closure" id=".service_locator.8yyrqQl.App\Controller\Admin\UserCrudController::configureResponseParameters()"/>
+        <argument key="App\Controller\Api\ClassementApiController::rankingAll" type="service_closure" id=".service_locator.z0A7H.F.App\Controller\Api\ClassementApiController::rankingAll()"/>
         <argument key="App\Controller\Api\DeckApiController::index" type="service_closure" id=".service_locator.LSa5ZfP.App\Controller\Api\DeckApiController::index()"/>
         <argument key="App\Controller\Api\DeckApiController::showDeck" type="service_closure" id=".service_locator.LSa5ZfP.App\Controller\Api\DeckApiController::showDeck()"/>
         <argument key="App\Controller\Api\DeckApiController::getFlashcardsByDeck" type="service_closure" id=".service_locator.rrRFccK.App\Controller\Api\DeckApiController::getFlashcardsByDeck()"/>
@@ -9409,6 +9503,7 @@
         <argument key="App\Controller\Admin\UserCrudController:createNewForm" type="service_closure" id=".service_locator.5pLxdxQ.App\Controller\Admin\UserCrudController::createNewForm()"/>
         <argument key="App\Controller\Admin\UserCrudController:createNewFormBuilder" type="service_closure" id=".service_locator.5pLxdxQ.App\Controller\Admin\UserCrudController::createNewFormBuilder()"/>
         <argument key="App\Controller\Admin\UserCrudController:configureResponseParameters" type="service_closure" id=".service_locator.8yyrqQl.App\Controller\Admin\UserCrudController::configureResponseParameters()"/>
+        <argument key="App\Controller\Api\ClassementApiController:rankingAll" type="service_closure" id=".service_locator.z0A7H.F.App\Controller\Api\ClassementApiController::rankingAll()"/>
         <argument key="App\Controller\Api\DeckApiController:index" type="service_closure" id=".service_locator.LSa5ZfP.App\Controller\Api\DeckApiController::index()"/>
         <argument key="App\Controller\Api\DeckApiController:showDeck" type="service_closure" id=".service_locator.LSa5ZfP.App\Controller\Api\DeckApiController::showDeck()"/>
         <argument key="App\Controller\Api\DeckApiController:getFlashcardsByDeck" type="service_closure" id=".service_locator.rrRFccK.App\Controller\Api\DeckApiController::getFlashcardsByDeck()"/>
@@ -9583,10 +9678,11 @@
     <service id="security.ldap_locator" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <argument type="collection"/>
     </service>
-    <service id=".service_locator.Y8LF_zi" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator..xMWxtC" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="vich_uploader.listener.clean.deck_images" type="service_closure" id="vich_uploader.listener.clean.deck_images"/>
+        <argument key="vich_uploader.listener.clean.user_images" type="service_closure" id="vich_uploader.listener.clean.user_images"/>
         <argument key="doctrine.orm.listeners.doctrine_dbal_cache_adapter_schema_listener" type="service_closure" id="doctrine.orm.listeners.doctrine_dbal_cache_adapter_schema_listener"/>
         <argument key="doctrine.orm.listeners.doctrine_token_provider_schema_listener" type="service_closure" id="doctrine.orm.listeners.doctrine_token_provider_schema_listener"/>
         <argument key="doctrine.orm.listeners.pdo_session_handler_schema_listener" type="service_closure" id="doctrine.orm.listeners.pdo_session_handler_schema_listener"/>
@@ -9594,6 +9690,8 @@
         <argument key="doctrine.orm.default_listeners.attach_entity_listeners" type="service_closure" id="doctrine.orm.default_listeners.attach_entity_listeners"/>
         <argument key="vich_uploader.listener.remove.deck_images" type="service_closure" id="vich_uploader.listener.remove.deck_images"/>
         <argument key="vich_uploader.listener.upload.deck_images" type="service_closure" id="vich_uploader.listener.upload.deck_images"/>
+        <argument key="vich_uploader.listener.remove.user_images" type="service_closure" id="vich_uploader.listener.remove.user_images"/>
+        <argument key="vich_uploader.listener.upload.user_images" type="service_closure" id="vich_uploader.listener.upload.user_images"/>
       </argument>
     </service>
     <service id=".service_locator.ecxP5Ut" class="Symfony\Component\DependencyInjection\ServiceLocator">
@@ -9756,6 +9854,12 @@
         <argument key="security.csrf.token_manager" type="service_closure" id="security.csrf.same_origin_token_manager" on-invalid="ignore"/>
         <argument key="parameter_bag" type="service_closure" id="parameter_bag" on-invalid="ignore"/>
       </argument>
+    </service>
+    <service id=".service_locator.TJNRSaV.App\Controller\Api\ClassementApiController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\Api\ClassementApiController"/>
+      <argument>App\Controller\Api\ClassementApiController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.TJNRSaV" method="withContext"/>
     </service>
     <service id=".service_locator.TJNRSaV.App\Controller\Api\DeckApiController" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\Api\DeckApiController"/>
@@ -9980,6 +10084,7 @@
           <argument>App\Controller\Admin\FlashcardCrudController</argument>
           <argument>App\Controller\Admin\TagCrudController</argument>
           <argument>App\Controller\Admin\UserCrudController</argument>
+          <argument>App\Controller\Api\ClassementApiController</argument>
           <argument>App\Controller\Api\DeckApiController</argument>
           <argument>App\Controller\Api\FlashcardApiController</argument>
           <argument>App\Controller\Api\RevisionLogController</argument>
@@ -11193,7 +11298,7 @@
     <service id="lexik_jwt_authentication.key_loader" alias="lexik_jwt_authentication.key_loader.raw" public="true"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.ryAvHi4" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.diNMdAY"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator._TUPyaq"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.W55Po6X"/>
     <service id="Psr\Log\LoggerInterface" alias="logger"/>
@@ -11225,6 +11330,7 @@
     <service id=".service_locator.UOV1jy9" alias=".service_locator.3BoFVFw"/>
     <service id=".service_locator.jhs8G0n" alias=".service_locator.5pLxdxQ"/>
     <service id=".service_locator.hQGSJQi" alias=".service_locator.8yyrqQl"/>
+    <service id=".service_locator.0ekWYPZ" alias=".service_locator.z0A7H.F"/>
     <service id=".service_locator.bdipRnZ" alias=".service_locator.LSa5ZfP"/>
     <service id=".service_locator.4RGF5C_" alias=".service_locator.rrRFccK"/>
     <service id=".service_locator.L6VNTRP" alias=".service_locator.Uac5_wE"/>
@@ -11234,7 +11340,6 @@
     <service id=".service_locator.FuMLO25" alias=".service_locator.rLt2rxW"/>
     <service id=".service_locator.YRCOjdD" alias=".service_locator.g5gvHJi"/>
     <service id=".service_locator.qWg9Gx3" alias=".service_locator.MHMFXwg"/>
-    <service id=".service_locator.0ekWYPZ" alias=".service_locator.z0A7H.F"/>
     <service id=".service_locator.vf25Nvq" alias=".service_locator.crqc3Ue"/>
     <service id=".service_locator.Vu0ROki" alias=".service_locator.vHgnEho"/>
     <service id=".service_locator.quXHoqW" alias=".service_locator.KXs0lgY"/>

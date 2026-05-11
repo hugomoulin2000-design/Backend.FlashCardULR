@@ -66,7 +66,7 @@ class DeckApiController extends AbstractController
             'id' => $deck->getId(),
             'titre' => $deck->getTitre(),
             'description' => $deck->getDescription(),
-            'user_id' => $deck->getUser()?->getId(),
+            'username' => $deck->getUser()?->getUsername(),
             'difficulte' => $deck->getDifficulte(),
             'flashcards_count' => count($deck->getFlashcards() ?? []),
             'tags' => $tags,

@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class UserApiController extends AbstractController
 {
@@ -42,7 +42,16 @@ class UserApiController extends AbstractController
             return $this->json(['error' => 'Unauthorized'], 401);
         }
 
-        if ($user->getImageName()) {
+        $imageName = $user->getImageName();
+
+        if ($imageName) {
+
+            $imagePath = $this->getParameter('kernel.project_dir') . '/public/uploads/users/' . $imageName;
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+
+
             $user->setImageFile(null);
             $user->setImageName(null);
             $user->setUpdatedAt(new \DateTimeImmutable());

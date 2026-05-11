@@ -29,7 +29,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
-    #[Vich\UploadableField(mapping: 'deck_images', fileNameProperty: 'imageName')]
+    #[Vich\UploadableField(mapping: 'user_images', fileNameProperty: 'imageName')]
     private ?File $imageFile = null;
 
     #[ORM\Column(length: 255, nullable: true)]
