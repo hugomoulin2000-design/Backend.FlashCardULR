@@ -23,7 +23,6 @@ ENV DATABASE_URL=${DATABASE_URL}
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 # 🔥 Vider les caches Symfony après build
-RUN php bin/console cache:clear --env=prod
 RUN php bin/console cache:clear --env=dev
 
 EXPOSE 10000
