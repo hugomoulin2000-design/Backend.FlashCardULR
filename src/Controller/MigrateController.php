@@ -11,7 +11,8 @@ class MigrateController extends AbstractController
     #[Route('/migrate', name: 'app_migrate')]
     public function migrate(): Response
     {
-        $output = shell_exec('php bin/console doctrine:migrations:migrate --no-interaction 2>&1');
+        // Exécuter la migration depuis le bon chemin
+        $output = shell_exec('php /app/bin/console doctrine:migrations:migrate --no-interaction 2>&1');
 
         return new Response(nl2br($output));
     }
