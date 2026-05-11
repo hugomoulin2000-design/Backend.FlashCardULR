@@ -9,6 +9,9 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /app
 COPY . .
 
+# 🔥 Supprimer tout cache Symfony avant build
+RUN rm -rf var/cache/*
+
 # Fake env vars for build
 ENV APP_ENV=prod
 ENV APP_DEBUG=0
@@ -17,11 +20,12 @@ ENV DATABASE_VERSION=15
 ARG DATABASE_URL
 ENV DATABASE_URL=${DATABASE_URL}
 
-
 RUN composer install --no-dev --optimize-autoloader --no-interaction
+
+# 🔥 Vider les caches Symfony après build
 RUN php bin/console cache:clear --env=prod
 RUN php bin/console cache:clear --env=dev
 
-
 EXPOSE 10000
 CMD ["php", "-S", "0.0.0.0:10000", "-t", "public"]
+
