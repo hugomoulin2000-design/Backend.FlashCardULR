@@ -36,4 +36,17 @@ class MigrateController extends AbstractController
         $columns = $conn->fetchAllAssociative($sql);
         return new Response('<pre>' . print_r($columns, true) . '</pre>');
     }
+    #[Route('/debug-doctrine-tables')]
+public function debugDoctrineTables(\Doctrine\DBAL\Connection $conn): Response
+{
+    $tables = $conn->fetchAllAssociative("
+        SELECT table_schema, table_name 
+        FROM information_schema.tables
+        WHERE table_schema NOT IN ('pg_catalog', 'information_schema')
+        ORDER BY table_schema, table_name
+    ");
+
+    return new Response('<pre>' . print_r($tables, true) . '</pre>');
+}
+
 }
