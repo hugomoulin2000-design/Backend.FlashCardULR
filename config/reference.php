@@ -1329,11 +1329,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         resolve_target_entities?: array<string, scalar|Param|null>,
  *     },
  * }
- * @psalm-type MakerConfig = array{
- *     root_namespace?: scalar|Param|null, // Default: "App"
- *     generate_final_classes?: bool|Param, // Default: true
- *     generate_final_entities?: bool|Param, // Default: false
- * }
  * @psalm-type DoctrineMigrationsConfig = array{
  *     enable_service_migrations?: bool|Param, // Whether to enable fetching migrations from the service container. // Default: false
  *     migrations_paths?: array<string, scalar|Param|null>,
@@ -1533,7 +1528,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         twig_component?: TwigComponentConfig,
  *         security?: SecurityConfig,
  *         doctrine?: DoctrineConfig,
- *         maker?: MakerConfig,
  *         doctrine_migrations?: DoctrineMigrationsConfig,
  *         vich_uploader?: VichUploaderConfig,
  *         nelmio_cors?: NelmioCorsConfig,

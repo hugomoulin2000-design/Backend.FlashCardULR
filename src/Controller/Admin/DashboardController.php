@@ -8,7 +8,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
 
-#[AdminDashboard(routePath: '/admin', routeName: 'admin')]
+#[AdminDashboard(routePath: '/', routeName: 'admin')]
 class DashboardController extends AbstractDashboardController
 {
     public function index(): Response
@@ -47,6 +47,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkTo(\App\Controller\Admin\FlashcardCrudController::class, 'Flashcards', 'fa fa-clone');
         yield MenuItem::linkTo(\App\Controller\Admin\TagCrudController::class, 'Tags', 'fa fa-tags');
         yield MenuItem::linkTo(\App\Controller\Admin\UserCrudController::class, 'Utilisateurs', 'fa fa-user');
+        yield MenuItem::linkTo(\App\Controller\Admin\RevisionLogCrudController::class, 'Revisions', 'fa fa-layer-group');
 
         yield MenuItem::section('Compte');
         yield MenuItem::linkToLogout('Déconnexion', 'fa fa-sign-out');

@@ -1,0 +1,9 @@
+<?php //easyadmin.crud.controller_fqcn_to_entity_fqcn
+
+return [PHP_INT_MAX, [
+    'App\\Controller\\Admin\\DeckCrudController' => 'App\\Entity\\Deck',
+    'App\\Controller\\Admin\\FlashcardCrudController' => 'App\\Entity\\Flashcard',
+    'App\\Controller\\Admin\\RevisionLogCrudController' => 'App\\Entity\\RevisionLog',
+    'App\\Controller\\Admin\\TagCrudController' => 'App\\Entity\\Tag',
+    'App\\Controller\\Admin\\UserCrudController' => 'App\\Entity\\User',
+]];
