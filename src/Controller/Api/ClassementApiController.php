@@ -16,14 +16,14 @@ class ClassementApiController extends AbstractController
 
         // requete pour toute les stats
         $sql = "
-            SELECT u.id, u.username, u.image_name,
+            SELECT user.id, user.username, user.image_name,
                    COUNT(DISTINCT r.deck_id) AS decks_revised,
                    SUM(r.flashcards_count) AS flashcards_revised,
                    SUM(r.duration_seconds) AS total_seconds,
                    MAX(r.created_at) AS last_activity
-            FROM "user" u
-            LEFT JOIN revision_log r ON r.user_id = u.id
-            GROUP BY u.id
+            FROM user 
+            LEFT JOIN revision_log r ON r.user_id = user.id
+            GROUP BY user.id
         ";
 
         $rows = $conn->executeQuery($sql)->fetchAllAssociative();
