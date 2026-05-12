@@ -10,9 +10,7 @@ nelmio_cors:
     paths:
         '^/api/':
             allow_origin:
-                - 'http://localhost:5173'
-                - 'https://localhost:5173'
-                - 'https://projetl2.localhost:8443'
+                - 'https://partievue.onrender.com'
             allow_credentials: true
             allow_headers: ['Content-Type', 'Authorization']
             expose_headers: ['Link', 'Authorization']
