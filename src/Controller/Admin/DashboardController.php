@@ -13,7 +13,7 @@ use App\Entity\User;
 use App\Entity\RevisionLog;
 use Symfony\Component\HttpFoundation\Response;
 
-#[AdminDashboard(routePath: '/', routeName: 'admin')]
+#[AdminDashboard(routePath: '/admin', routeName: 'admin')]
 class DashboardController extends AbstractDashboardController
 {
     public function index(): Response
