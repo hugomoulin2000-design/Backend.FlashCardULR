@@ -40,24 +40,31 @@ class TagApiController extends AbstractController
     }
 
 
-    #[Route('/api/tags/{id}/decks', name: 'api_tag_decks', methods: ['GET'])]
-    public function decks(Tag $tag): Response
-    {
-        $decks = $tag->getDecks();
-        $data = [];
-
-        foreach ($decks as $deck) {
-            $data[] = [
-                'id' => $deck->getId(),
-                'titre' => $deck->getTitre(),
-                'description' => $deck->getDescription(),
-                'flashcards_count' => $deck->getFlashcards()->count(),
+  #[Route('/api/tags/{id}/decks', name: 'api_tag_decks', methods: ['GET'])]
+public function decks(Tag $tag): Response
+{
+    $decks = $tag->getDecks();
+    $data = [];
+    foreach ($decks as $deck) {
+        $tags = [];
+        foreach ($deck->getTags() as $t) {
+            $tags[] = [
+                'id' => $t->getId(),
+                'nom' => $t->getNom(),
             ];
         }
 
-        return $this->json($data);
+        $data[] = [
+            'id' => $deck->getId(),
+            'titre' => $deck->getTitre(),
+            'description' => $deck->getDescription(),
+            'difficulte' => $deck->getDifficulte(),
+            'flashcards_count' => $deck->getFlashcards()->count(),
+            'tags' => $tags,
+        ];
     }
-
+    return $this->json($data);
+}
 
 
 
